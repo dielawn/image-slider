@@ -1,4 +1,6 @@
 const containerDiv = document.getElementById('containerDiv')
+const buttonDiv = document.getElementById('buttonDiv')
+const carouselDiv = document.getElementById('carouselDiv')
 
 let images = []
 let index = 0
@@ -37,57 +39,83 @@ const renderAllImages = () => {
 }
 
 const renderImagesCarousel = () => {
-    const carouselDiv = document.createElement('div')    
-    containerDiv.appendChild(carouselDiv)
-    createScrollBtns(index)
-    
+    renderImage(index)
+    createScrollBtns()    
 }
 
-const renderImage = () => {
+const renderImage = (i) => {
     const lastImage = document.querySelector('img')
     if (lastImage) {
         lastImage.remove()
     }
     const newImageElem = document.createElement('img')
-    newImageElem.src = images[index].src
-    newImageElem.classList.add(images[index].style)
-    newImageElem.alt = images[index].alt
-    containerDiv.appendChild(newImageElem)
+    newImageElem.src = images[i].src
+    newImageElem.classList.add(images[i].style)
+    newImageElem.alt = images[i].alt
+    carouselDiv.appendChild(newImageElem)
+
+    let imageDots = document.querySelectorAll('.imageDot')
+    for (let j = 0; j  < imageDots.length; j++) {
+        imageDots[j].classList.remove('active')    
+        if (j === i) {
+          imageDots[j].classList.add('active')
+        }       
+    }
 }
 
-const createScrollBtns = (index) => {
-    
+const createScrollBtns = () => {    
     //left
     const leftScrollBtn = document.createElement('button')
+    leftScrollBtn.classList.add('scrollBtn')
     leftScrollBtn.innerHTML = '&#10094;'
     leftScrollBtn.id = 'leftScroll'
     leftScrollBtn.addEventListener('click', () => {
-        scroll(0, index)
-        renderImage()
+        pauseCarousel()
+        scroll(0)
+        renderImage(index)
         
     })
-    containerDiv.appendChild(leftScrollBtn)
+    buttonDiv.appendChild(leftScrollBtn)
+
+    //image dots for each image
+    for (let i = 0; i < images.length; i++) {
+        const imageDots = document.createElement('div')
+        imageDots.classList.add('imageDot')
+        imageDots.addEventListener('click', () => {
+            pauseCarousel()
+            renderImage(i)  
+            index = i          
+        })
+        buttonDiv.appendChild(imageDots)
+    }
+    //set first dot to active
+    let allImageDots = document.querySelectorAll('.imageDot')
+    for (let i = 0; i < allImageDots.length; i++) {
+        let firstImage = allImageDots[0]
+        firstImage.classList.add('active')
+    }
+
     //right
     const rightScrollBtn = document.createElement('button')
+    rightScrollBtn.classList.add('scrollBtn')
     rightScrollBtn.innerHTML = '&#10095;'
     rightScrollBtn.id = 'rightScroll'
     rightScrollBtn.addEventListener('click', () => {
-        scroll(1, index)
-        renderImage()
+        pauseCarousel()
+        scroll(1)
+        renderImage(index)
+    
     })    
-    containerDiv.appendChild(rightScrollBtn)
+    buttonDiv.appendChild(rightScrollBtn)
 }
 
 const scroll = (num) => {
   if (num >= 1) {
     index++
-    console.log(index)
   } else {
     index--
-    console.log(index)
     if (index === -1) {
       const lastImage = images.length - 1
-      console.log(lastImage)
       index = lastImage
     }
   }
@@ -97,4 +125,22 @@ const scroll = (num) => {
 return index
 }
 
+let isPaused = false
+
+const scrollImages = () => {    
+    setTimeout(function() {
+        if (!isPaused) {
+        scroll(1)
+        renderImage(index)
+        scrollImages()
+        }
+    }, 5000)        
+}
+
+const pauseCarousel = () => {
+    isPaused = true
+    return isPaused
+}
+
 renderImagesCarousel()
+scrollImages()

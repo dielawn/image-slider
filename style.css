@@ -3,7 +3,64 @@
     padding: 0;
     box-sizing: border-box;
 }
+:root {
+    --hoverColor: rgba(255, 255, 255, .4);
+    --defaultColor: rgba(000, 000, 000, .4);
+}
 
 .landscape {
-    width: 300px;
+    width: 100%;
+}
+
+.scrollBtn {
+    border: none;
+    background-color: transparent;
+    font-size: xx-large;
+    color: var(--defaultColor);
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 100%;
+  
+    align-items: center;
+}
+
+.scrollBtn:hover {
+    background-color:var(--defaultColor);
+}
+.scrollBtn:active {
+    background-color: var(--hoverColor);
+    color: white;
+}
+
+.buttonDiv {
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   align-content: center;
+   
+}
+.imageDot {
+    background-color: var(--defaultColor);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;    
+    transition: .3s;
+}
+
+.imageDot:hover {
+    background-color:var(--defaultColor);
+    width: 35px;
+    height: 35px;
+}
+
+.imageDot:active {
+    background-color: var(--hoverColor);
+}
+
+.active {
+    background-color:var(--defaultColor);
+    width: 35px;
+    height: 35px;
 }
