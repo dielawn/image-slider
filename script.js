@@ -16,6 +16,13 @@ addImageToImages('Alison', 'Alison in the desert', 'images/20140430_123408.jpg',
 addImageToImages('Alison', 'Alison in the desert', 'images/20140430_130948.jpg', 'landscape', '20140430_130948' )
 addImageToImages('Alison', 'Alison in the desert', 'images/20140430_132145.jpg', 'landscape', '20140430_132145' )
 
+addImageToImages('Alison', 'Alison in the desert', 'images/20140429_153018.jpg', 'portrait', '20140429_153018' )
+addImageToImages('Alison', 'Alison in the desert', 'images/20140429_181918.jpg', 'portrait', '20140429_181918' )
+addImageToImages('Alison', 'Alison in the desert', 'images/20140429_181925.jpg', 'portrait', '20140429_181925' )
+addImageToImages('Alison', 'Alison in the desert', 'images/20140430_113955.jpg', 'portrait', '20140430_113955' )
+addImageToImages('Alison', 'Alison in the desert', 'images/20140430_114555.jpg', 'portrait', '20140430_114555' )
+
+
 function addImageToImages(name, alt, src, style, id) {
     const newImage = {
         name: name,

@@ -12,6 +12,14 @@
     width: 100%;
 }
 
+.portrait {
+   height: 63vh;
+}
+
+.carouselDiv {
+    display: flex;
+    justify-content: center;
+}
 .scrollBtn {
     border: none;
     background-color: transparent;
