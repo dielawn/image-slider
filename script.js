@@ -1,6 +1,7 @@
 const containerDiv = document.getElementById('containerDiv')
 
 let images = []
+let index = 0
 
 addImageToImages('Alison', 'Alison in the desert', 'images/20140429_151222.jpg', 'landscape', '20140429_151222' )
 addImageToImages('Alison', 'Alison in the desert', 'images/20140429_151926.jpg', 'landscape', '20140429_151926' )
@@ -38,45 +39,62 @@ const renderAllImages = () => {
 const renderImagesCarousel = () => {
     const carouselDiv = document.createElement('div')    
     containerDiv.appendChild(carouselDiv)
-    createScrollBtns()
-  
+    createScrollBtns(index)
+    
 }
 
-const createScrollBtns = () => {
-    let index = 0
+const renderImage = () => {
+    const lastImage = document.querySelector('img')
+    if (lastImage) {
+        lastImage.remove()
+    }
+    const newImageElem = document.createElement('img')
+    newImageElem.src = images[index].src
+    newImageElem.classList.add(images[index].style)
+    newImageElem.alt = images[index].alt
+    containerDiv.appendChild(newImageElem)
+}
+
+const createScrollBtns = (index) => {
+    
     //left
     const leftScrollBtn = document.createElement('button')
     leftScrollBtn.innerHTML = '&#10094;'
     leftScrollBtn.id = 'leftScroll'
-    leftScrollBtn.addEventListener('click', () => scroll(1, index))
+    leftScrollBtn.addEventListener('click', () => {
+        scroll(0, index)
+        renderImage()
+        
+    })
     containerDiv.appendChild(leftScrollBtn)
     //right
     const rightScrollBtn = document.createElement('button')
     rightScrollBtn.innerHTML = '&#10095;'
     rightScrollBtn.id = 'rightScroll'
-    rightScrollBtn.addEventListener('click', () => scroll(0, index))    
+    rightScrollBtn.addEventListener('click', () => {
+        scroll(1, index)
+        renderImage()
+    })    
     containerDiv.appendChild(rightScrollBtn)
 }
 
-const scroll = (num, index) => {
-   
-
-    if (num === 1) {
-        index++
-        console.log(images[index].src)
-    return images[index].src
-    } else {
-        index--
-        console.log(index)
-        console.log(images[index].src)
-        if ( index === -1) {
-            const lastImage = images[images.length - 1];
-           return lastImage.src
-        } else {
-            return images[index].src
-        }
-    
-    } 
+const scroll = (num) => {
+  if (num >= 1) {
+    index++
+    console.log(index)
+  } else {
+    index--
+    console.log(index)
+    if (index === -1) {
+      const lastImage = images.length - 1
+      console.log(lastImage)
+      index = lastImage
+    }
+  }
+  if (index >= images.length) {
+    index = 0
+    }
+return index
 }
 
 renderImagesCarousel()
